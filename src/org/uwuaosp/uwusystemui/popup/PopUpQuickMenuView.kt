@@ -104,9 +104,9 @@ class PopUpQuickMenuView(
             if (screenWidth > screenHeight) CIRCLE_CENTER_Y_LAND else CIRCLE_CENTER_Y_PORT
         val dim = min(screenWidth, screenHeight)
 
-        val innerRadius = dim * CIRCLE_RADIUS_RATIO
-        val outerRadius = dim * OUTER_CIRCLE_RADIUS_RATIO
-        val innerIconRadius = dim * ICON_SIZE_RATIO / 2
+        val innerRadius = cappedDimension(dim * CIRCLE_RADIUS_RATIO, MAX_INNER_RADIUS_DP)
+        val outerRadius = cappedDimension(dim * OUTER_CIRCLE_RADIUS_RATIO, MAX_OUTER_RADIUS_DP)
+        val innerIconRadius = cappedDimension(dim * ICON_SIZE_RATIO / 2, MAX_ICON_RADIUS_DP)
 
         for (index in 0 until childCount) {
             val isInner = index < INNER_CHILD_COUNT
@@ -266,6 +266,10 @@ class PopUpQuickMenuView(
             .getInsets(WindowInsets.Type.navigationBars()).bottom
     }
 
+    private fun cappedDimension(valuePx: Float, maxDp: Float): Float {
+        return min(valuePx, maxDp * resources.displayMetrics.density)
+    }
+
     private fun checkIconAlongPath(startX: Float, startY: Float, endX: Float, endY: Float) {
         val steps = 5
         for (index in 1 until steps) {
@@ -335,10 +339,13 @@ class PopUpQuickMenuView(
         private const val CIRCLE_OFFSET_X_LAND = 0.1f
         private const val CIRCLE_CENTER_Y_LAND = 0.95f
         private const val ICON_SIZE_RATIO = 0.1f
+        private const val MAX_ICON_RADIUS_DP = 48f
         private const val ICON_SPACING_MULTIPLIER = 1.5f
         private const val CIRCLE_RADIUS_RATIO = 0.4f
+        private const val MAX_INNER_RADIUS_DP = 360f
 
         private const val OUTER_CIRCLE_RADIUS_RATIO = 0.52f
+        private const val MAX_OUTER_RADIUS_DP = 460f
         private const val OUTER_ICON_SPACING_MULTIPLIER = 1.2f
         private const val INNER_ANGLE_START = 45f
         private const val INNER_ANGLE_END = 135f
