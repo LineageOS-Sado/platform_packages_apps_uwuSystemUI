@@ -242,15 +242,13 @@ class MomentArcController(
 
     private fun launchAllApps() {
         val intent =
-            Intent().apply {
-                setClassName(SETTINGS_PACKAGE, SETTINGS_ALL_APPS_ACTIVITY)
-                addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_MULTIPLE_TASK)
+            Intent(Intent.ACTION_ALL_APPS).apply {
+                addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
             }
-        val options = buildMomentOptions()
         runCatching {
-            sysuiContext.startActivityAsUser(intent, options.toBundle(), getCurrentUserHandle())
+            sysuiContext.startActivityAsUser(intent, getCurrentUserHandle())
         }.onFailure {
-            Log.w(TAG, "Failed to launch all apps picker", it)
+            Log.w(TAG, "Failed to open launcher all-apps", it)
         }
     }
 
@@ -377,9 +375,6 @@ class MomentArcController(
         private const val INNER_RING_TARGETS = "moment_arc_selected_targets"
         private const val OUTER_RING_TARGETS =
             "moment_arc_outer_ring_selected_targets"
-        private const val SETTINGS_PACKAGE = "org.uwuaosp.settingsext"
-        private const val SETTINGS_ALL_APPS_ACTIVITY =
-            "org.uwuaosp.settingsext.moment.MomentAllAppsActivity"
     }
 
     private sealed interface MomentArcTarget {
