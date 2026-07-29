@@ -22,10 +22,18 @@
         android:label="@string/plugin_label">
         <service
             android:name=".MomentArcPlugin"
-            android:exported="false"
+            android:exported="true"
             android:label="@string/plugin_label">
             <intent-filter>
                 <action android:name="com.android.systemui.action.PLUGIN_OVERLAY" />
+            </intent-filter>
+        </service>
+        <service
+            android:name="org.uwuaosp.systemui.volume.VolumeDialogPlugin"
+            android:exported="true"
+            android:label="@string/volume_plugin_label">
+            <intent-filter>
+                <action android:name="com.android.systemui.action.PLUGIN_VOLUME" />
             </intent-filter>
         </service>
     </application>

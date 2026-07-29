@@ -16,4 +16,6 @@
 -->
 <resources>
     <string name="plugin_label">MomentArc</string>
+    <string name="volume_plugin_label">Volume panel</string>
+    <string name="volume_panel_description">Volume controls</string>
 </resources>
